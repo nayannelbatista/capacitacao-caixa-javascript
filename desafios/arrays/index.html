@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorriso+ | Central de Atendimento</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">✦</span><span>Sorriso<span class="brand-plus">+</span><small>CLÍNICA ODONTOLÓGICA</small></span></a>
+    <span class="status"><i></i> Recepção aberta</span>
+  </header>
+
+  <main class="container">
+    <section class="welcome">
+      <div>
+        <p class="eyebrow">PAINEL DA RECEPÇÃO</p>
+        <h1>Central de atendimento</h1>
+        <p class="subtitle">Organize a fila e acompanhe os próximos atendimentos.</p>
+      </div>
+      <div class="date-chip"><span>HOJE</span><strong>Atendimento</strong></div>
+    </section>
+
+    <section class="stats">
+      <article class="stat-card"><span class="stat-icon blue">☷</span><div><p>Pessoas na fila</p><strong id="queueCount">0</strong></div></article>
+      <article class="stat-card"><span class="stat-icon green">✓</span><div><p>Próxima senha</p><strong id="nextNumber">001</strong></div></article>
+      <article class="stat-card"><span class="stat-icon peach">＋</span><div><p>Atendimentos chamados</p><strong id="calledCount">0</strong></div></article>
+    </section>
+
+    <section class="main-grid">
+      <div class="panel queue-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">ACOMPANHAMENTO</p><h2>Fila de espera</h2></div>
+          <span class="live-pill"><i></i> Atualizada ao vivo</span>
+        </div>
+        <div class="now-serving">
+          <div><span class="mini-label">PRÓXIMA PESSOA</span><h3 id="nextPatient">Aguardando chegada</h3><p id="nextTicket">Nenhuma senha chamada</p></div>
+          <span class="ticket-icon">⌁</span>
+        </div>
+        <div class="list-heading"><h3>Pessoas aguardando</h3><span id="listCount">0 pessoas</span></div>
+        <ul id="queueList" class="queue-list" aria-live="polite"></ul>
+        <p id="emptyMessage" class="empty-message">A fila está vazia. Cadastre uma pessoa para começar.</p>
+      </div>
+
+      <aside class="panel actions-panel">
+        <p class="eyebrow">GERENCIAR FILA</p>
+        <h2>Novo atendimento</h2>
+        <label for="patientName">Nome da pessoa</label>
+        <input id="patientName" type="text" placeholder="Ex.: Maria Oliveira" maxlength="40">
+        <button id="addButton" class="button primary" type="button">＋ Adicionar à fila</button>
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
+        <div class="separator"></div>
+        <h3>Chamar próximo</h3>
+        <p class="helper">Chame a próxima pessoa que está aguardando.</p>
+        <button id="callButton" class="button secondary" type="button">Chamar próximo →</button>
+        <div class="separator"></div>
+        <h3>Buscar na fila</h3>
+        <label for="searchName">Nome para localizar</label>
+        <input id="searchName" type="text" placeholder="Digite um nome">
+        <button id="searchButton" class="button outline" type="button">Localizar pessoa</button>
+        <p id="searchResult" class="search-result" aria-live="polite"></p>
+      </aside>
+    </section>
+
+    <section class="panel tools-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">CONSULTAS</p><h2>Visualização da fila</h2></div>
+        <span class="helper">Experimente os filtros</span>
+      </div>
+      <div class="tool-row">
+        <div><label for="initialFilter">Filtrar nomes pela inicial</label><input id="initialFilter" type="text" maxlength="1" placeholder="Ex.: M"></div>
+        <button id="filterButton" class="button outline" type="button">Filtrar</button>
+        <button id="allButton" class="button ghost" type="button">Mostrar todos</button>
+        <button id="upperButton" class="button ghost" type="button">Ver nomes em maiúsculas</button>
+      </div>
+      <p id="viewMessage" class="view-message">Exibindo a fila completa.</p>
+    </section>
+
+    <footer>Atividade prática de JavaScript · Arrays e funções <span>Sorriso+ ©</span></footer>
+  </main>
+</body>
+</html>

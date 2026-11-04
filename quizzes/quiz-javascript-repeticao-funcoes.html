@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz — JavaScript: estruturas de repetição e funções</title>
+<style>
+:root{
+  --bg:#F4F5F8; --card:#FFFFFF; --ink:#14181F; --ink2:#4A5260; --line:#D9DDE5;
+  --accent:#3B4BD6; --ok-bg:#E3F4EA; --ok:#0F6B3F; --bad-bg:#FBE7E5; --bad:#A3231B;
+  --code-bg:#12161E; --code-ink:#E6E9F0;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0E1117; --card:#171B24; --ink:#EEF0F5; --ink2:#A4ACBA; --line:#2A303C;
+    --accent:#8C98FF; --ok-bg:#12301F; --ok:#7BDDA5; --bad-bg:#3A1816; --bad:#FF9D94;
+    --code-bg:#0A0D13; --code-ink:#E6E9F0;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6;padding:24px 16px 48px}
+main{max-width:720px;margin:0 auto}
+h1{font-size:20px;font-weight:600;margin:0 0 4px}
+.sub{color:var(--ink2);font-size:14px;margin:0 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.meta{display:flex;justify-content:space-between;font-size:14px;color:var(--ink2);margin-bottom:8px}
+.bar{height:4px;background:var(--line);border-radius:2px;margin-bottom:20px}
+.bar>div{height:4px;background:var(--accent);border-radius:2px;transition:width .25s}
+pre{margin:0 0 16px;padding:14px 16px;background:var(--code-bg);color:var(--code-ink);border-radius:8px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;font-size:14px;line-height:1.65;tab-size:4}
+.pergunta{font-size:16px;font-weight:500;margin:0 0 14px}
+.opt{display:flex;gap:10px;width:100%;text-align:left;padding:12px 14px;margin:0 0 8px;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;font:inherit;font-size:15px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opt b{font-weight:600;min-width:20px}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.fb{display:none;margin:12px 0 16px;padding:12px 14px;border-radius:8px;font-size:14px}
+.fb.ok{display:block;background:var(--ok-bg);color:var(--ok)}
+.fb.bad{display:block;background:var(--bad-bg);color:var(--bad)}
+.btn{font:inherit;font-size:15px;padding:10px 18px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+@media (prefers-color-scheme: dark){.btn{color:#0E1117}}
+.btn.sec{background:transparent;color:var(--accent)}
+.nota{font-size:32px;font-weight:600;margin:0}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:16px 0 20px}
+.grid div{padding:8px 0;text-align:center;border-radius:8px;font-size:13px;font-weight:600}
+.grid .ok{background:var(--ok-bg);color:var(--ok)}
+.grid .bad{background:var(--bad-bg);color:var(--bad)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Quiz — JavaScript: estruturas de repetição e funções</h1>
+  <p class="sub">12 questões · nível intermediário</p>
+  <div class="card" id="app"></div>
+</main>
+
+<script>
+/* Ordem das alternativas já fixa e balanceada (3 respostas corretas em cada letra).
+   a = índice da alternativa correta (0 = A, 1 = B, 2 = C, 3 = D). */
+var QUESTOES = [
+{
+  c: 'let total = 0;\n\nfor (let i = 1; i <= 5; i++) {\n    if (i % 2 === 0) {\n        total += i;\n    }\n}\n\nconsole.log(total);',
+  q: 'Qual será o resultado exibido no console?',
+  o: ['9', '6', '15', '8'],
+  a: 1,
+  e: 'Apenas os valores pares (2 e 4) são somados: 2 + 4 = 6.'
+},
+{
+  c: 'let contador = 1;\nlet resultado = 0;\n\nwhile (contador <= 4) {\n    resultado += contador;\n}\n\nconsole.log(resultado);',
+  q: 'Ao executar esse código, qual será o comportamento?',
+  o: ['Exibe 10 e encerra normalmente, somando de 1 até 4.',
+      'Exibe 4 e encerra normalmente, pois a condição falha no limite.',
+      'Apresenta SyntaxError porque falta um incremento na condição.',
+      'Entra em loop infinito, pois o contador nunca é atualizado no bloco.'],
+  a: 3,
+  e: 'contador nunca muda dentro do laço, então a condição contador <= 4 é sempre verdadeira. A sintaxe está correta; o problema é lógico.'
+},
+{
+  c: 'let numero = 10;\nlet tentativas = 0;\n\ndo {\n    numero += 2;\n    tentativas++;\n} while (numero < 10);\n\nconsole.log(numero);\nconsole.log(tentativas);',
+  q: 'O que será exibido?',
+  o: ['12 e 1', '10 e 0', '12 e 0', 'O bloco não executa, pois a condição já começa falsa.'],
+  a: 0,
+  e: 'O do...while executa o bloco uma vez antes de testar a condição. Depois disso, 12 < 10 é falso e o laço encerra: numero = 12 e tentativas = 1.'
+},
+{
+  c: 'function calcularDesconto(valor, percentual) {\n    const desconto = valor * percentual / 100;\n    return valor - desconto;\n}\n\nconst compra1 = calcularDesconto(200, 10);\nconst compra2 = calcularDesconto(300, 20);\n\nconst total = compra1 + compra2;\n\nconsole.log(total);',
+  q: 'Qual será o resultado?',
+  o: ['440', '500', '420', '450'],
+  a: 2,
+  e: 'compra1 = 200 - 20 = 180; compra2 = 300 - 60 = 240; total = 420.'
+},
+{
+  c: 'function calcularMedia(nota1, nota2) {\n    const media = (nota1 + nota2) / 2;\n    console.log("Média:", media);\n}\n\nfunction verificarResultado() {\n    const resultado = calcularMedia(8, 6);\n    console.log("Resultado:", resultado);\n}\n\nverificarResultado();',
+  q: 'Qual será a saída?',
+  o: ['Média: 7 e depois Resultado: undefined',
+      'Média: 7 e depois Resultado: 7',
+      'Apenas Resultado: 7',
+      'Ocorre ReferenceError porque resultado não foi declarado.'],
+  a: 0,
+  e: 'calcularMedia só imprime, não retorna nada. Sem return, a função devolve undefined, que é o valor guardado em resultado.'
+},
+{
+  c: 'let mensagem = "Olá";\nlet quantidade = 5;\n\nfunction apresentar() {\n    let mensagem = "Bem-vindos";\n    quantidade = quantidade + 2;\n\n    console.log(mensagem);\n    console.log(quantidade);\n}\n\napresentar();\n\nconsole.log(mensagem);\nconsole.log(quantidade);',
+  q: 'Qual será a sequência de valores exibida?',
+  o: ['Olá, 5, Bem-vindos, 7', 'Olá, 7, Bem-vindos, 5', 'Bem-vindos, 5, Olá, 5', 'Bem-vindos, 7, Olá, 7'],
+  a: 3,
+  e: 'O let mensagem dentro da função cria uma variável local, que não afeta a global. Já quantidade não é redeclarada, então a função altera a global (5 para 7).'
+},
+{
+  c: 'function testarEscopo() {\n    if (true) {\n        var nome = "Ana";\n        let idade = 30;\n    }\n\n    console.log(nome);\n    console.log(idade);\n}\n\ntestarEscopo();',
+  q: 'O que acontece?',
+  o: ['Exibe Ana e 30, pois ambas pertencem ao escopo da função.',
+      'Exibe Ana e depois ocorre ReferenceError ao acessar idade.',
+      'Ocorre ReferenceError ao acessar nome, pois var respeita o bloco.',
+      'Ocorre SyntaxError, pois var e let não podem coexistir no mesmo bloco.'],
+  a: 1,
+  e: 'var tem escopo de função e continua acessível fora do if. let tem escopo de bloco, então idade não existe fora dele.'
+},
+{
+  c: 'function somar(a, b) {\n    return a + b;\n}\n\nfunction dobrar(numero) {\n    return numero * 2;\n}\n\nfunction executarOperacao(a, b, operacao) {\n    return dobrar(operacao(a, b));\n}\n\nconst resultado = executarOperacao(5, 3, somar);\n\nconsole.log(resultado);',
+  q: 'Qual será o resultado?',
+  o: ['8', '13', '16', '10'],
+  a: 2,
+  e: 'operacao é somar, então operacao(5, 3) = 8. Depois dobrar(8) = 16.'
+},
+{
+  c: 'const calcular = function(a, b) {\n    console.log("Calculando...");\n    return a * b;\n};\n\nconsole.log("Início");\n\nconst resultado = calcular(3, 4);\n\nconsole.log("Resultado:", resultado);',
+  q: 'Qual alternativa representa corretamente a saída e o comportamento do código?',
+  o: ['A função é executada antes de "Início", pois foi declarada antes.',
+      'Exibe "Início" e "Resultado: 12", pois o console.log da função não executa.',
+      'Ocorre TypeError, pois função anônima não pode ser guardada em constante.',
+      'Exibe "Início", depois "Calculando..." e, por último, "Resultado: 12".'],
+  a: 3,
+  e: 'Declarar a função não a executa. Ela só roda na chamada calcular(3, 4), que vem depois do log de "Início".'
+},
+{
+  c: 'function calcularTotal() {\n    const preco = 100;\n    const desconto = 20;\n\n    return preco - desconto;\n}\n\nconsole.log(calcularTotal());\nconsole.log(desconto);',
+  q: 'O que acontece?',
+  o: ['Ocorre ReferenceError na segunda instrução, pois desconto está fora do escopo.',
+      'Exibe 80 e depois 20, pois a constante pode ser lida em qualquer escopo.',
+      'Exibe 80 e depois undefined, pois desconto não recebeu valor fora da função.',
+      'Ocorre TypeError, pois a variável desconto é uma constante e não pode ser lida.'],
+  a: 0,
+  e: 'desconto existe apenas dentro de calcularTotal. Fora da função, o identificador não está declarado e gera ReferenceError.'
+},
+{
+  c: 'function dobrar(numero) {\n    return numero * 2;\n}\n\nfunction somarComDez(numero) {\n    return numero + 10;\n}\n\nfunction calcular(numero) {\n    const primeiraEtapa = dobrar(numero);\n    const segundaEtapa = somarComDez(primeiraEtapa);\n\n    return segundaEtapa - numero;\n}\n\nconsole.log(calcular(5));',
+  q: 'Qual será o resultado?',
+  o: ['20', '10', '15', '25'],
+  a: 2,
+  e: 'dobrar(5) = 10; somarComDez(10) = 20; 20 - 5 = 15.'
+},
+{
+  c: 'function calcular(a, b) {\n    const resultado = a + b;\n}\n\nfunction multiplicarPorDois(numero) {\n    return numero * 2;\n}\n\nfunction exibirResultado() {\n    const total = calcular(10, 5);\n    const valorFinal = multiplicarPorDois(total);\n\n    console.log("Total:", total);\n    console.log("Valor final:", valorFinal);\n}\n\nexibirResultado();',
+  q: 'Qual será o comportamento?',
+  o: ['Exibe Total: 15 e Valor final: 30.',
+      'Exibe Total: undefined e Valor final: NaN.',
+      'Ocorre ReferenceError porque resultado não foi declarado.',
+      'Ocorre TypeError porque calcular não recebe uma função como argumento.'],
+  a: 1,
+  e: 'calcular não tem return, então total é undefined. Depois, undefined * 2 resulta em NaN.'
+}
+];
+
+var app = document.getElementById('app');
+var idx = 0, acertos = 0, respondeu = false, resultados = [];
+
+function el(tag, cls, txt){
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (txt !== undefined) e.textContent = txt;
+  return e;
+}
+
+function iniciar(){ idx = 0; acertos = 0; resultados = []; render(); }
+
+function render(){
+  app.innerHTML = '';
+  respondeu = false;
+  if (idx >= QUESTOES.length) { return final(); }
+  var q = QUESTOES[idx];
+
+  var meta = el('div', 'meta');
+  meta.appendChild(el('span', '', 'Questão ' + (idx + 1) + ' de ' + QUESTOES.length));
+  meta.appendChild(el('span', '', 'Acertos: ' + acertos));
+  app.appendChild(meta);
+
+  var bar = el('div', 'bar');
+  var fill = el('div');
+  fill.style.width = (idx / QUESTOES.length * 100) + '%';
+  bar.appendChild(fill);
+  app.appendChild(bar);
+
+  var pre = el('pre');
+  var code = el('code', '', q.c);
+  pre.appendChild(code);
+  app.appendChild(pre);
+
+  app.appendChild(el('p', 'pergunta', q.q));
+
+  var box = el('div');
+  var fb = el('div', 'fb');
+  var prox = el('button', 'btn', idx === QUESTOES.length - 1 ? 'Ver resultado' : 'Próxima questão');
+  prox.style.display = 'none';
+  prox.onclick = function(){ idx++; render(); window.scrollTo({top: 0}); };
+
+  q.o.forEach(function(texto, i){
+    var b = el('button', 'opt');
+    b.appendChild(el('b', '', String.fromCharCode(65 + i) + ')'));
+    b.appendChild(el('span', '', texto));
+    b.onclick = function(){
+      if (respondeu) return;
+      respondeu = true;
+      var certo = (i === q.a);
+      if (certo) acertos++;
+      resultados.push(certo);
+      var btns = box.querySelectorAll('button');
+      for (var k = 0; k < btns.length; k++) {
+        btns[k].disabled = true;
+        if (k === q.a) btns[k].classList.add('ok');
+      }
+      if (!certo) b.classList.add('bad');
+      fb.className = 'fb ' + (certo ? 'ok' : 'bad');
+      fb.textContent = (certo ? 'Correto. ' : 'Incorreto. ') + q.e;
+      prox.style.display = 'inline-block';
+      prox.focus();
+    };
+    box.appendChild(b);
+  });
+
+  app.appendChild(box);
+  app.appendChild(fb);
+  app.appendChild(prox);
+}
+
+function final(){
+  var pct = Math.round(acertos / QUESTOES.length * 100);
+  app.appendChild(el('div', 'meta', 'Resultado final'));
+  app.appendChild(el('p', 'nota', acertos + ' de ' + QUESTOES.length + ' (' + pct + '%)'));
+  var grid = el('div', 'grid');
+  resultados.forEach(function(r, i){ grid.appendChild(el('div', r ? 'ok' : 'bad', 'Q' + (i + 1))); });
+  app.appendChild(grid);
+  var b = el('button', 'btn sec', 'Refazer quiz');
+  b.onclick = iniciar;
+  app.appendChild(b);
+}
+
+iniciar();
+</script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz interativo — Fundamentos Front-end, Node.js e npm</title>
+<style>
+  :root { color-scheme: light; --blue:#1769aa; --pale:#eaf4fc; --ink:#203040; --muted:#5e6d7b; --line:#d7e0e8; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#f3f7fb; color:var(--ink); font-family:Arial,Helvetica,sans-serif; line-height:1.5; }
+  main { max-width:900px; margin:28px auto; padding:0 16px 36px; }
+  header { background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:16px; }
+  h1 { margin:0 0 8px; font-size:clamp(1.5rem,4vw,2.15rem); line-height:1.2; }
+  header p { margin:8px 0 0; color:var(--muted); }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; box-shadow:0 4px 16px #2030400a; }
+  .topline { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--muted); font-size:.95rem; margin-bottom:12px; }
+  .bar { height:8px; background:#e5edf4; border-radius:99px; overflow:hidden; margin-bottom:22px; }
+  .bar > div { height:100%; background:var(--blue); width:0; transition:width .2s; }
+  h2 { font-size:1.25rem; margin:0 0 18px; line-height:1.4; }
+  .options { display:grid; gap:10px; }
+  .option { display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left; background:#fff; border:1px solid var(--line); border-radius:10px; padding:13px 15px; font-size:1rem; color:var(--ink); cursor:pointer; }
+  .option:hover:not(:disabled) { border-color:var(--blue); background:#f7fbff; }
+  .letter { flex:0 0 28px; height:28px; display:grid; place-items:center; border-radius:7px; background:#eef3f7; font-weight:700; }
+  .option.correct { border-color:#238451; background:#edf9f1; }
+  .option.correct .letter { background:#238451; color:#fff; }
+  .option.wrong { border-color:#c84b4b; background:#fff1f1; }
+  .option.wrong .letter { background:#c84b4b; color:#fff; }
+  .option:disabled { cursor:default; opacity:1; }
+  .feedback { display:none; margin-top:18px; padding:15px 16px; border-radius:10px; background:var(--pale); border-left:4px solid var(--blue); }
+  .feedback.show { display:block; }
+  .feedback strong { display:block; margin-bottom:5px; }
+  .controls { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:22px; }
+  button.nav { border:0; border-radius:9px; padding:11px 17px; font-size:1rem; font-weight:700; cursor:pointer; }
+  button.primary { background:var(--blue); color:white; }
+  button.secondary { background:#e9eef3; color:var(--ink); }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  .result { display:none; }
+  .result.show { display:block; }
+  .score { font-size:2.5rem; font-weight:800; color:var(--blue); margin:8px 0; }
+  .review { padding:14px 0; border-bottom:1px solid var(--line); }
+  .review:last-child { border-bottom:0; }
+  .review p { margin:5px 0; }
+  .small { font-size:.92rem; color:var(--muted); }
+  @media(max-width:560px) { main{margin:12px auto;} header,.panel{padding:18px;} .controls{flex-wrap:wrap;} }
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>Quiz interativo: fundamentos front-end, Node.js e npm</h1>
+  <p>14 questões de múltipla escolha, com feedback imediato e explicação. Ideal para responder em conjunto durante a aula.</p>
+  <p class="small">Marque uma alternativa por questão. Use “Próxima” para continuar; no final, confira o resultado e revise as respostas.</p>
+</header>
+<section class="panel" id="quiz">
+  <div class="topline"><span id="counter">Questão 1 de 14</span><span id="answered">Respondidas: 0/14</span></div>
+  <div class="bar"><div id="progress"></div></div>
+  <h2 id="question"></h2>
+  <div class="options" id="options"></div>
+  <div class="feedback" id="feedback" aria-live="polite"></div>
+  <div class="controls">
+    <button class="nav secondary" id="prev">← Anterior</button>
+    <button class="nav primary" id="next">Próxima →</button>
+  </div>
+</section>
+<section class="panel result" id="result">
+  <h2>Resultado final</h2>
+  <div class="score" id="score"></div>
+  <p id="summary"></p>
+  <div id="review"></div>
+  <div class="controls"><button class="nav primary" id="restart">Refazer quiz</button></div>
+</section>
+</main>
+<script>
+const questions = [
+ {q:"Ao alterar o CSS, o navegador precisa calcular as dimensões e posições dos elementos para organizar a página. Qual etapa está diretamente relacionada a esse cálculo?", a:["Repaint","Layout (ou reflow)","Download do JavaScript","Execução do npm"], c:1, e:"Layout calcula ou recalcula as dimensões e posições dos elementos. Repaint redesenha os pixels quando a aparência visual muda, sem necessariamente recalcular o layout."},
+ {q:"Qual é o papel principal do Node.js?", a:["Criar estilos CSS no navegador","Executar JavaScript fora do navegador, por exemplo em ferramentas e servidores","Armazenar todos os pacotes JavaScript em um único arquivo","Substituir o HTML"], c:1, e:"Node.js é um ambiente de execução de JavaScript fora do navegador. Ele é usado, por exemplo, para ferramentas de desenvolvimento, scripts e aplicações de servidor."},
+ {q:"Em uma página HTML, o que pode acontecer se um script clássico sem `defer` estiver no meio do documento?", a:["O navegador pode pausar a análise do HTML para baixar e executar o script","O script só será executado depois que todas as imagens carregarem","O navegador transforma automaticamente o script em TypeScript","O script será ignorado"], c:0, e:"Um script clássico sem `defer` pode bloquear a análise do HTML enquanto é baixado e executado. `defer` permite baixar durante a análise e executar depois que o HTML for analisado."},
+ {q:"Qual alternativa descreve melhor o npm?", a:["Uma linguagem de programação diferente de JavaScript","Uma ferramenta para gerenciar pacotes e dependências JavaScript","Um navegador de internet","Um formato de imagem"], c:1, e:"O npm é usado para instalar e gerenciar pacotes e dependências, além de executar scripts definidos no package.json."},
+ {q:"O que é um registry no ecossistema npm?", a:["Um editor de código","Um repositório/serviço que armazena e disponibiliza pacotes","Uma variável global do JavaScript","Uma etapa de renderização do navegador"], c:1, e:"O registry é o serviço de onde ferramentas como npm obtêm informações e pacotes. O registry público padrão do npm é o npmjs.org, mas projetos corporativos podem usar registries privados."},
+ {q:"Qual comando mostra qual registry está configurado no npm?", a:["`node --registry`","`npm config get registry`","`npm show config`","`npm registry --version`"], c:1, e:"`npm config get registry` consulta o valor configurado. Para ver a versão do Node.js, use `node --version`; para a versão do npm, `npm --version`."},
+ {q:"Qual é uma função comum de um bundler ou ferramenta de build?", a:["Organizar dependências e gerar arquivos de saída para distribuição","Substituir a necessidade de escrever qualquer código","Garantir que toda aplicação funcione sem HTML","Apenas mudar a cor do editor"], c:0, e:"Ferramentas de build podem resolver dependências, transformar código, dividir a aplicação em chunks e gerar arquivos otimizados para distribuição. O conjunto exato depende do projeto e da configuração."},
+ {q:"O que o comando `npm install` normalmente faz em um projeto que já tem package.json?", a:["Apaga o código-fonte e recria o projeto","Instala as dependências declaradas, considerando o lockfile quando aplicável","Publica automaticamente o projeto na internet","Mostra somente a versão do Node.js"], c:1, e:"`npm install` instala as dependências do projeto. Quando existe um lockfile compatível, ele ajuda a manter versões resolvidas consistentes. O comando não publica automaticamente a aplicação."},
+ {q:"Uma biblioteca que o projeto usa depende de outro pacote, mesmo que o nosso código não importe esse segundo pacote diretamente. Como essa dependência é chamada?", a:["Dependência transitiva","Dependência visual","Dependência local do navegador","Dependência inexistente"], c:0, e:"Uma dependência transitiva chega ao projeto por meio de outra dependência. Por isso, nem todo pacote instalado é necessariamente importado diretamente pelo código da aplicação."},
+ {q:"Para que serve principalmente o arquivo package.json?", a:["Guardar apenas imagens do projeto","Declarar informações do projeto, dependências e scripts","Executar o HTML dentro do navegador","Substituir todos os arquivos JavaScript"], c:1, e:"O package.json descreve o projeto e pode declarar dependências, scripts, metadados e outras configurações usadas pelas ferramentas do ecossistema."},
+ {q:"Qual é a diferença mais adequada entre uma biblioteca e um framework?", a:["Biblioteca e framework são exatamente a mesma coisa em todos os contextos","Em geral, a aplicação chama funções da biblioteca; um framework também define uma estrutura e controla partes do fluxo","Bibliotecas só servem para CSS e frameworks só servem para Java","Frameworks não podem ser usados em aplicações web"], c:1, e:"É uma distinção geral, não uma regra absoluta: com uma biblioteca, o código da aplicação costuma chamá-la; um framework tende a impor uma estrutura e chamar o código da aplicação em pontos definidos."},
+ {q:"Considere: `let nome = \"Ana\"; nome = \"Maria\"; console.log(nome);`. O que será exibido?", a:["Ana","Maria","undefined","Erro porque let não pode ser reatribuído"], c:1, e:"Uma variável declarada com `let` pode receber outro valor. Portanto, o console exibirá `Maria`."},
+ {q:"Qual afirmação sobre `const` é correta?", a:["Uma constante não pode ser declarada com valor","`const` permite reatribuir qualquer valor depois","`const` impede a reatribuição da variável, mas não torna automaticamente imutável um objeto armazenado nela","`const` só funciona dentro de classes"], c:2, e:"`const` impede reatribuir a variável. Se ela guarda uma referência a um objeto ou array, as propriedades ou os itens ainda podem ser alterados, embora a referência não possa ser reatribuída."},
+ {q:"O que os comandos `node --version` e `npm --version` mostram, respectivamente?", a:["As versões do Node.js e do npm","As versões do npm e do Node.js","O registry e a pasta do projeto","A versão do navegador e do sistema operacional"], c:0, e:"`node --version` mostra a versão do Node.js; `npm --version` mostra a versão do npm. São comandos úteis para verificar a instalação do ambiente."}
+];
+let current = 0;
+const answers = Array(questions.length).fill(null);
+const $ = id => document.getElementById(id);
+function render() {
+ const item = questions[current];
+ $("counter").textContent = `Questão ${current+1} de ${questions.length}`;
+ $("answered").textContent = `Respondidas: ${answers.filter(x=>x!==null).length}/${questions.length}`;
+ $("progress").style.width = `${(current/questions.length)*100}%`;
+ $("question").textContent = item.q;
+ const opts = $("options"); opts.innerHTML = "";
+ item.a.forEach((answer, i) => {
+   const btn = document.createElement("button");
+   btn.className = "option";
+   btn.innerHTML = `<span class="letter">${String.fromCharCode(65+i)}</span><span></span>`;
+   btn.children[1].textContent = answer;
+   btn.addEventListener("click", () => { if (answers[current] === null) { answers[current] = i; render(); } });
+   if (answers[current] !== null) {
+     btn.disabled = true;
+     if (i === item.c) btn.classList.add("correct");
+     else if (i === answers[current]) btn.classList.add("wrong");
+   }
+   opts.appendChild(btn);
+ });
+ const fb = $("feedback");
+ if (answers[current] !== null) {
+   fb.className = "feedback show";
+   fb.innerHTML = `<strong>${answers[current] === item.c ? "Resposta correta!" : "Não foi dessa vez."}</strong>`;
+   const p = document.createElement("p"); p.textContent = item.e; fb.appendChild(p);
+ } else { fb.className = "feedback"; fb.textContent = ""; }
+ $("prev").disabled = current === 0;
+ $("next").textContent = current === questions.length-1 ? "Ver resultado →" : "Próxima →";
+ $("next").disabled = answers[current] === null;
+}
+function showResult() {
+ $("quiz").style.display = "none";
+ $("result").classList.add("show");
+ const correct = answers.filter((a,i)=>a===questions[i].c).length;
+ $("score").textContent = `${correct} / ${questions.length}`;
+ $("summary").textContent = correct === questions.length ? "Excelente! Você acertou todas as questões." : correct >= 10 ? "Muito bom! Revise os pontos das questões que ficaram incorretas." : "Vale revisar as explicações e tentar novamente. O objetivo é compreender os conceitos, não decorar respostas.";
+ $("review").innerHTML = "";
+ questions.forEach((q,i)=>{
+   const div = document.createElement("div"); div.className = "review";
+   const title = document.createElement("strong"); title.textContent = `${i+1}. ${q.q}`;
+   const p1 = document.createElement("p"); p1.textContent = `Sua resposta: ${answers[i]===null ? "Não respondida" : String.fromCharCode(65+answers[i])+". "+q.a[answers[i]]}`;
+   const p2 = document.createElement("p"); p2.textContent = `Gabarito: ${String.fromCharCode(65+q.c)}. ${q.a[q.c]}`;
+   const p3 = document.createElement("p"); p3.className="small"; p3.textContent=q.e;
+   div.append(title,p1,p2,p3); $("review").appendChild(div);
+ });
+}
+$("prev").addEventListener("click",()=>{if(current>0){current--;render();}});
+$("next").addEventListener("click",()=>{if(answers[current]===null)return;if(current<questions.length-1){current++;render();}else{showResult();}});
+$("restart").addEventListener("click",()=>{current=0;answers.fill(null);$("result").classList.remove("show");$("quiz").style.display="block";render();window.scrollTo({top:0,behavior:"smooth"});});
+render();
+</script>
+</body>
+</html>

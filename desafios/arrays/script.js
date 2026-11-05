@@ -6,7 +6,7 @@
 
 let fila = ["Ana Paula", "Carlos Mendes", "Juliana Costa", "Pedro Henrique"];
 let totalChamados = 0;
-let nomesExibidos = [...fila];
+let nomesExibidos = [...fila]; //spread operator - operador de espalhamento
 
 // ===== FUNÇÕES DE APOIO À INTERFACE (já prontas) =====
 // Não é necessário alterar estas funções para resolver os primeiros desafios.
@@ -42,34 +42,37 @@ function atualizarListaCompleta() {
 // DESAFIO 1 — Adicionar pessoa
 // Recebe um nome e adiciona ao final do array fila.
 function adicionarPessoa(nome) {
-  // TODO
+  if(!nome) return false;
+  fila.push(nome);
+  return true;
 }
 
 // DESAFIO 2 — Chamar próxima pessoa
 // Remove e retorna a primeira pessoa da fila.
 // Se a fila estiver vazia, retorne uma mensagem adequada.
 function chamarProximaPessoa() {
-  // TODO
+  if(fila.length === 0) return "A fila está vazia"
+  totalChamados++;
+  return fila.shift();
 }
 
 // DESAFIO 3 — Consultar quantidade
 // Retorne a quantidade de pessoas que estão aguardando.
 function consultarQuantidade() {
-  // TODO
+  return fila.length;
 }
 
 // DESAFIO 4 — Localizar pessoa
 // Recebe um nome e retorna o primeiro nome encontrado.
 // Se não encontrar, retorne undefined.
 function localizarPessoa(nome) {
-  // TODO 
-  //(considere comparar sem diferenciar maiúsculas/minúsculas)
+  return fila.find((pessoa) => pessoa.toLowerCase() === nome.toLowerCase());
 }
 
 // DESAFIO 5 — Verificar presença
 // Recebe um nome e retorna true ou false.
 function pessoaEstaNaFila(nome) {
-  // TODO
+  return fila.includes(nome);
 }
 
 // DESAFIO 6 — Listar pessoas
@@ -77,21 +80,23 @@ function pessoaEstaNaFila(nome) {
 // Para este desafio, percorra fila com forEach().
 function listarPessoas() {
   const nomes = [];
-  // TODO
+  fila.forEach((nome) => nomes.push(nome))
   return nomes;
 }
 
 // DESAFIO 7 — Gerar nomes em maiúsculas
-// Retorne um NOVO array com todos os nomes em letras maiúsculas.
+// Retorne um NOVO array com todos os nomes 
+// em letras maiúsculas.
 function gerarNomesMaiusculos() {
-  // TODO
+  return fila.map(nome => nome.toUpperCase());
 }
 
 // DESAFIO 8 — Filtrar pela inicial
 // Recebe uma letra e retorna um NOVO array com nomes que começam com ela.
 // Considere maiúsculas e minúsculas.
 function filtrarPelaInicial(letra) {
-  // TODO
+  if (!letra) return [];
+  return fila.filter((nome) => nome.toLowerCase().startsWith(letra.toLowerCase()))
 }
 
 // ===== EVENTOS DA PÁGINA (já prontos) =====

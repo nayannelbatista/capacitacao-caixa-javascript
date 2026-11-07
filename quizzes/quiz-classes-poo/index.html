@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz de POO em JavaScript</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topo">
+    <div class="topo-conteudo">
+      <span class="marca" aria-hidden="true">{ }</span>
+      <div>
+        <p class="topo-titulo">Programação Orientada a Objetos em JavaScript</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+
+    <!-- TELA INICIAL -->
+    <section id="tela-inicio" class="folha" aria-labelledby="titulo-inicio">
+      <h1 id="titulo-inicio">Quiz: classes e objetos</h1>
+      <p class="lead">
+        <span id="total-questoes">10</span> questões sobre POO. Você escolhe uma resposta por vez e só vê o
+        gabarito comentado no final.
+      </p>
+
+      <ul class="resumo">
+        <li><strong>3 formatos:</strong> múltipla escolha, verdadeiro ou falso e interpretação de código.</li>
+      </ul>
+
+      <h2>O que você vai revisar</h2>
+      <p class="topicos">
+        Conceito de POO, classe e objeto, atributos e métodos, <code>constructor</code>,
+        <code>this</code>, <code>new</code> e validação de dados.
+      </p>
+
+      <button type="button" id="btn-iniciar" class="btn btn-primario">Começar o quiz</button>
+    </section>
+
+    <!-- TELA DO QUIZ -->
+    <section id="tela-quiz" class="folha" aria-live="polite" hidden>
+      <div class="progresso">
+        <div class="progresso-texto">
+          <span id="progresso-rotulo">Questão 1 de 10</span>
+          <span id="progresso-nivel" class="etiqueta etiqueta-nivel">Básico</span>
+        </div>
+        <div class="barra" role="progressbar" aria-label="Progresso do quiz"
+             aria-valuemin="1" aria-valuemax="10" aria-valuenow="1" id="barra">
+          <div class="barra-preenchida" id="barra-preenchida"></div>
+        </div>
+      </div>
+
+      <div class="etiquetas">
+        <span id="q-tipo" class="etiqueta">Múltipla escolha</span>
+        <span id="q-topico" class="etiqueta etiqueta-suave">Tópico</span>
+      </div>
+
+      <h2 id="q-enunciado" class="enunciado" tabindex="-1"></h2>
+      <div id="q-codigo"></div>
+
+      <div id="q-opcoes" class="opcoes" role="group" aria-labelledby="q-enunciado"></div>
+
+      <div class="acoes">
+        <button type="button" id="btn-proxima" class="btn btn-primario" disabled>Próxima questão</button>
+      </div>
+    </section>
+
+    <!-- TELA DE RESULTADO -->
+    <section id="tela-resultado" hidden>
+      <div class="folha resultado" aria-labelledby="titulo-resultado">
+        <div id="anel" class="anel" style="--pct:0">
+          <div class="anel-miolo">
+            <span id="anel-pct" class="anel-pct">0%</span>
+          </div>
+        </div>
+        <div class="resultado-texto">
+          <h2 id="titulo-resultado" tabindex="-1">Resultado final</h2>
+          <p id="res-pontuacao" class="res-pontuacao"></p>
+          <p id="res-mensagem" class="res-mensagem"></p>
+          <div class="acoes acoes-esquerda">
+            <button type="button" id="btn-reiniciar" class="btn btn-primario">Refazer o quiz</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gabarito-cabecalho">
+        <h2>Gabarito comentado</h2>
+        <div class="filtro" role="group" aria-label="Filtrar questões do gabarito">
+          <button type="button" class="btn-filtro ativo" data-filtro="todas" aria-pressed="true">Todas</button>
+          <button type="button" class="btn-filtro" data-filtro="erradas" aria-pressed="false">Só as que errei</button>
+        </div>
+      </div>
+
+      <div id="gabarito"></div>
+
+      <div class="acoes acoes-centro">
+        <button type="button" id="btn-reiniciar-2" class="btn btn-secundario">Refazer o quiz</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape">
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

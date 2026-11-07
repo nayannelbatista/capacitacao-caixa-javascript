@@ -21,21 +21,21 @@
 
 //separar responsabilidades
 //callbacks
-function somar(a, b) {
-    return a + b
-}
+// function somar(a, b) {
+//     return a + b
+// }
 
-function subtrair(a, b) {
-    return a - b
-}
+// function subtrair(a, b) {
+//     return a - b
+// }
 
-function multiplicar(a, b) {
-    return a * b
-}
+// function multiplicar(a, b) {
+//     return a * b
+// }
 
-function dividir(a, b) {
-    return a / b
-}
+// function dividir(a, b) {
+//     return a / b
+// }
 
 //segunda abordagem
 // function calcular(a, b, operacao) {
@@ -59,12 +59,25 @@ function dividir(a, b) {
 
 //terceira abordagem
 //high order function
-function calcular(a, b, operacao) {
-    return operacao(a, b)
+// function calcular(a, b, operacao) {
+//     return operacao(a, b)
+// }
+
+// console.log(calcular(10, 5, somar))
+// console.log(calcular(10, 5, subtrair))
+// console.log(calcular(10, 5, multiplicar))
+// console.log(calcular(10, 5, dividir))
+
+//quarta abordagem
+const operacoes = {
+    somar: (a,b) => a+b,
+    subtrair: (a,b) => a-b,
+    multiplicar: (a,b) => a*b,
+    dividir: (a,b) => a/b,
 }
 
-console.log(calcular(10, 5, somar))
-console.log(calcular(10, 5, subtrair))
-console.log(calcular(10, 5, multiplicar))
-console.log(calcular(10, 5, dividir))
+function calcular(a, b, operacao) {
+    return operacoes[operacao](a, b)
+}
 
+console.log(calcular(5, 10, "somar"))

@@ -1,0 +1,262 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef4fb;
+    color: #24364b;
+    min-height: 100vh;
+    padding: 35px 15px;
+}
+
+.container {
+    max-width: 750px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(30, 70, 110, 0.08);
+}
+
+.cabecalho {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.tag {
+    display: inline-block;
+    background: #e1efff;
+    color: #1764ad;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+h1 {
+    color: #174c7e;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.cabecalho p {
+    color: #718096;
+    line-height: 1.5;
+}
+
+.progresso {
+    margin-bottom: 25px;
+}
+
+.progresso-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.barra {
+    height: 9px;
+    background: #e5edf6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#barraProgresso {
+    height: 100%;
+    width: 0%;
+    background: #2781ca;
+    border-radius: 10px;
+    transition: width 0.3s;
+}
+
+.questao-card {
+    background: #f8fbff;
+    border: 1px solid #e1eaf4;
+    border-radius: 12px;
+    padding: 25px;
+    min-height: 280px;
+}
+
+.questao-card h2 {
+    font-size: 19px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #263f5b;
+}
+
+.alternativas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.alternativa {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d8e3ef;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #334b64;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1.5;
+    transition: 0.2s;
+}
+
+.alternativa:hover {
+    border-color: #2781ca;
+    background: #f0f7ff;
+}
+
+.alternativa.selecionada {
+    border: 2px solid #2781ca;
+    background: #eaf4ff;
+    color: #174c7e;
+}
+
+.letra {
+    font-weight: bold;
+    color: #2781ca;
+    min-width: 20px;
+}
+
+.navegacao {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    gap: 12px;
+}
+
+.btn {
+    border: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-principal {
+    background: #1769aa;
+    color: white;
+}
+
+.btn-principal:hover {
+    background: #105487;
+}
+
+.btn-secundario {
+    background: #e8eef5;
+    color: #42566d;
+}
+
+.btn-secundario:hover {
+    background: #d9e3ee;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.escondido {
+    display: none;
+}
+
+.resultado {
+    text-align: center;
+}
+
+.icone-resultado {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.resultado h2 {
+    color: #174c7e;
+    margin-bottom: 12px;
+}
+
+.resultado > p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.pontuacao {
+    background: #eaf4ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    color: #1769aa;
+}
+
+.pontuacao strong {
+    font-size: 38px;
+    display: block;
+}
+
+.resultado h3 {
+    text-align: left;
+    color: #174c7e;
+    margin-bottom: 15px;
+}
+
+.item-gabarito {
+    text-align: left;
+    border: 1px solid #e1eaf4;
+    border-radius: 9px;
+    padding: 15px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.item-gabarito.correta {
+    border-left: 4px solid #26966c;
+}
+
+.item-gabarito.incorreta {
+    border-left: 4px solid #d97757;
+}
+
+.item-gabarito p {
+    font-size: 14px;
+    margin-top: 6px;
+    color: #64748b;
+}
+
+.resultado #btnReiniciar {
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 22px 16px;
+    }
+
+    h1 {
+        font-size: 23px;
+    }
+
+    .questao-card {
+        padding: 18px;
+    }
+
+    .navegacao {
+        flex-direction: column-reverse;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

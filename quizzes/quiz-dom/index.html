@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Manipulação do DOM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="container">
+        <header class="cabecalho">
+            <span class="tag">JavaScript na prática</span>
+            <h1>Quiz: Manipulação do DOM</h1>
+        </header>
+
+        <section id="quiz">
+            <div class="progresso">
+                <div class="progresso-info">
+                    <span id="numeroQuestao"></span>
+                    <span id="porcentagem"></span>
+                </div>
+                <div class="barra">
+                    <div id="barraProgresso"></div>
+                </div>
+            </div>
+
+            <div class="questao-card">
+                <h2 id="pergunta"></h2>
+                <div id="alternativas" class="alternativas"></div>
+            </div>
+
+            <div class="navegacao">
+                <button id="btnVoltar" class="btn btn-secundario">
+                    Voltar
+                </button>
+                <button id="btnAvancar" class="btn btn-principal">
+                    Próxima questão
+                </button>
+            </div>
+        </section>
+
+        <section id="resultado" class="resultado escondido">
+            <div class="icone-resultado">🏆</div>
+            <h2>Quiz concluído!</h2>
+            <p id="mensagemResultado"></p>
+            <div class="pontuacao">
+                <strong id="pontuacao"></strong>
+                <span>de 15 questões</span>
+            </div>
+
+            <h3>Gabarito comentado</h3>
+            <div id="gabarito"></div>
+
+            <button id="btnReiniciar" class="btn btn-principal">
+                Refazer quiz
+            </button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

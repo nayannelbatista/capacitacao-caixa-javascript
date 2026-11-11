@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f1f4f8;
+  color: #263445;
+}
+
+.container {
+  max-width: 650px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+}
+
+.cabecalho {
+  padding: 30px;
+  background-color: #172d4b;
+  color: white;
+}
+
+.categoria {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: #a9c6e5;
+  font-weight: bold;
+}
+
+.cabecalho h1 {
+  margin: 12px 0 8px;
+  font-size: 26px;
+}
+
+.cabecalho p {
+  margin: 0;
+  color: #d5e2f1;
+  font-size: 14px;
+}
+
+form {
+  padding: 30px;
+}
+
+.secao {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e5eaf0;
+}
+
+.secao h2 {
+  margin: 0 0 18px;
+  font-size: 17px;
+  color: #244b75;
+}
+
+.descricao {
+  margin: -8px 0 16px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.campo {
+  margin-bottom: 18px;
+}
+
+.campo:last-child {
+  margin-bottom: 0;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+input:not([type="radio"]),
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background-color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  color: #263445;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #9bb9dc;
+  border-color: #315f91;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.opcoes {
+  display: flex;
+  gap: 14px;
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #dce3eb;
+  border-radius: 8px;
+  background-color: #f8fafc;
+}
+
+.opcao input {
+  margin: 0;
+}
+
+.opcao label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #244b75;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #183858;
+}

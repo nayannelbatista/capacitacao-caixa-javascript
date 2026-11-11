@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscrição em curso</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <main class="container">
+    <header class="cabecalho">
+      <span class="categoria">ÁREA DO ALUNO</span>
+      <h1>Inscrição em curso</h1>
+      <p>Preencha seus dados para realizar sua inscrição.</p>
+    </header>
+    <section>
+      
+    </section>
+
+    <form>
+
+      <section class="secao">
+        <h2>Dados pessoais</h2>
+
+        <div class="campo">
+          <label>Nome completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+        </div>
+
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input type="text" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <input type="text" id="senha" name="senha" placeholder="Crie uma senha" required>
+        </div>
+      </section>
+
+      <section class="secao">
+        <h2>Modalidade do curso</h2>
+
+        <p class="descricao">Como você deseja estudar?</p>
+
+        <div class="opcoes">
+          <div class="opcao">
+            <input type="radio" id="online" name="modalidade-online" value="online">
+            <label for="online">Online</label>
+          </div>
+
+          <div class="opcao">
+            <input type="radio" id="presencial" name="modalidade-presencial" value="presencial">
+            <label for="presencial">Presencial</label>
+          </div>
+        </div>
+      </section>
+
+      <section class="secao">
+        <h2>Escolha seu curso</h2>
+
+        <div class="campo">
+          <label for="curso">Curso desejado</label>
+
+          <select id="curso" name="curso">
+            <option value="">Selecione uma opção</option>
+            <option value="java">Java</option>
+            <option value="angular">Angular</option>
+            <option value="javascript">JavaScript</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="observacao">Observações</label>
+          <textarea id="observacao" name="observacao" rows="3" placeholder="Conte um pouco sobre suas expectativas..."></textarea>
+        </div>
+      </section>
+
+      <form>
+        <button type="submit">Realizar inscrição</button>
+      </form>
+
+    </form>
+  </main>
+</body>
+</html>

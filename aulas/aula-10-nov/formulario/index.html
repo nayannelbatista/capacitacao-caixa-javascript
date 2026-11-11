@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Cliente</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="cabecalho">
+        <h1>Cadastro de cliente</h1>
+        <p>Preencha seus dados para criar seu cadastro.</p>
+      </header>
+
+      <form action="#" method="post">
+        <fieldset>
+          <legend>Dados pessoais</legend>
+
+          <div class="campo">
+            <label for="nome">Nome completo</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              placeholder="Digite seu nome"
+              required
+              minlength="3"
+            />
+          </div>
+
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="seuemail@exemplo.com"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input
+              type="tel"
+              id="telefone"
+              name="telefone"
+              placeholder="(00) 00000-0000"
+            />
+          </div>
+
+          <div class="campo">
+            <label for="nascimento">Data de nascimento</label>
+            <input type="date" id="nascimento" name="nascimento" />
+          </div>
+
+          <div class="campo">
+            <label for="senha">Senha</label>
+            <input
+              type="password"
+              id="senha"
+              name="senha"
+              minlength="8"
+              required
+            />
+            <small>Mínimo de 8 caracteres.</small>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Tipo de cadastro</legend>
+
+          <div class="opcao">
+            <input
+              type="radio"
+              id="fisica"
+              name="tipo"
+              value="fisica"
+              required
+            />
+            <label for="fisica">Pessoa física</label>
+          </div>
+
+          <div class="opcao">
+            <input type="radio" id="juridica" name="tipo" value="juridica" />
+            <label for="juridica">Pessoa jurídica</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Interesses</legend>
+
+          <div class="opcao">
+            <input
+              type="checkbox"
+              id="tecnologia"
+              name="interesses"
+              value="tecnologia"
+            />
+            <label for="tecnologia">Tecnologia</label>
+          </div>
+
+          <div class="opcao">
+            <input
+              type="checkbox"
+              id="educacao"
+              name="interesses"
+              value="educacao"
+            />
+            <label for="educacao">Educação</label>
+          </div>
+
+          <div class="opcao">
+            <input
+              type="checkbox"
+              id="negocios"
+              name="interesses"
+              value="negocios"
+            />
+            <label for="negocios">Negócios</label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Localização</legend>
+
+          <div class="campo">
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado" required>
+              <option value="">Selecione seu estado</option>
+              <option value="PB">Paraíba</option>
+              <option value="PE">Pernambuco</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="CE">Ceará</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="mensagem">Mensagem</label>
+            <textarea
+              id="mensagem"
+              name="mensagem"
+              rows="4"
+              maxlength="300"
+              placeholder="Escreva uma mensagem..."
+            ></textarea>
+          </div>
+        </fieldset>
+
+        <div class="opcao termos">
+          <input type="checkbox" id="termos" name="termos" required />
+          <label for="termos"> Li e aceito os termos de uso. </label>
+        </div>
+
+        <div class="acoes">
+          <button type="submit">Enviar cadastro</button>
+          <button type="reset" class="secundario">Limpar</button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
